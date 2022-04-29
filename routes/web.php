@@ -34,4 +34,5 @@ Route::controller(SendController::class)->group(function () {
     // Route::post('send/cadastro', 'store')->name('sendCreate.action');
     Route::get('send/detalhe/{id}', 'update');
     Route::post('send/delete', 'store');
+    Route::get('send/request/{id}', 'AutoCompleteHandle');
 });

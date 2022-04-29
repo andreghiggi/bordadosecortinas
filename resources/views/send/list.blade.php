@@ -48,6 +48,7 @@
                             @csrf
                             <div class="form">
                                 <div class="input-group col">
+                                    <p id="error" style="display:none">Produto não encontrado!</p>
                                     <label class="form-label" for="referencia">Referencia:</label><br/>
                                     <input class="form-control" class="field" type="text" name="referencia" id="referencia"/>
                                 </div>
@@ -58,7 +59,7 @@
                                 <div class="col">
                                     <label class="form-label" for="quantidade">Quantidade</label><br/>
                                     <input class="form-control" type="text" name="quantidade" id="quantidade"/>
-                                </div>
+                                </div>  
                                 <div class="col">
                                     <input class="btn btn-primary" type="submit" value="Salvar"></input>
                                     <a type="button" class="btn btn-warning"  href="{{ route('main') }}">Voltar</a>
@@ -103,8 +104,26 @@
         });
     </script>
     <script>
+        var PRODUTO = ['referencia', 'nome', 'valor']
+        
         $('#referencia').change(function(){
             let referencia = $('#referencia').val()
+            $.ajax({
+                method: 'get',
+                url: 'request/' + $(this).val(),
+                dataType: "json",
+                success: function(data){
+                    $('#produto').val(data[0][0].nome);
+                }, error: function(e){
+                    $('#error').css("display", "block");
+                    console.log(e)
+                },
+                statusCode: {
+                    500: function(){
+                        console.log('something went wrong')
+                    }
+                }
+            })
             console.log(referencia)
         })
     </script>
