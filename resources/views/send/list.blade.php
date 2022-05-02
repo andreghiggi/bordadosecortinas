@@ -38,62 +38,76 @@
             }
         </style>
     </head>
-    <body class="antialiased">
+    <body>
         <div class="container">
-            <div class="main-container">
+            <div class="">
                 <div class="container">
-                    <h2>Lançar Produção</h2>
-                    <div class="table">
-                        <form class="table" method="POST" action="" autocomplete="off">
-                            @csrf
-                            <div class="form">
-                                <div class="input-group col">
-                                    <p id="error" style="display:none">Produto não encontrado!</p>
-                                    <label class="form-label" for="referencia">Referencia:</label><br/>
-                                    <input class="form-control" class="field" type="text" name="referencia" id="referencia"/>
+                    <form method="POST" action="" autocomplete="off">
+                        @csrf
+                        <div class="container form">
+                                <h2>Lançar Produção</h2>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <p id="error" class="alert alert-danger" role="alert" style="display:none">Produto não encontrado!</p>
+                                        <label class="form-label" for="referencia">Referencia:</label><br/>
+                                        <input class="form-control" class="field" type="text" name="referencia" id="referencia"/>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <label class="form-label" for="produto">Nome do Produto</label><br/>
-                                    <input class="form-control" type="text" name="produto" id="produto"/>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="form-label" for="produto">Nome do Produto</label><br/>
+                                        <input class="form-control" type="text" name="produto" id="produto"/>
+                                    </div>
+                                </div>    
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="form-label" for="quantidade">Quantidade</label><br/>
+                                        <input class="form-control" type="text" name="quantidade" id="quantidade"/>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <label class="form-label" for="quantidade">Quantidade</label><br/>
-                                    <input class="form-control" type="text" name="quantidade" id="quantidade"/>
-                                </div>  
-                                <div class="col">
-                                    <input class="btn btn-primary" type="submit" value="Salvar"></input>
-                                    <a type="button" class="btn btn-warning"  href="{{ route('main') }}">Voltar</a>
-                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12" style="margin-top: 1rem">
+                                        <input class="btn btn-primary" type="submit" value="Salvar"></input>
+                                        <a type="button" class="btn btn-warning"  href="{{ route('main') }}">Voltar</a>
+                                    </div>
+                                </div>            
                             </div>
+                        </div>
                         </form>
+                        <div class="container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Referencia</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Quantidade</th>
+                                    <th scope="col">Valor</th>
+                                    <th scope="col">Data Lançamento</th>
+                                    <th scope="col">Ações</th>
+                                    <th scope="col"><a type="button" class="btn btn-warning"  href="#">Imprimir</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($lancamento as $item)
+                                    <tr>
+                                    <th scope="row">{{$item->id}}</th>
+                                    <td>{{$item->referencia}}</td>
+                                    <td>{{$item->nome}}</td>
+                                    <td>{{$item->quantidade}}</td>
+                                    <td>{{'R$ '.number_format(($item->valor / 100), 2, ',', '.')}}</td>
+                                    <td>{{\Carbon\Carbon::parse(\Carbon\carbon::now())->format('d/m/Y')}}</td>
+                                    <td>
+                                        <div>
+                                            <a type="button" class="btn btn-danger"  href="{{ route('main') }}">Deletar</a>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div class="container">
-                    <table class="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Referencia</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Quantidade</th>
-                            <th scope="col">Valor</th>
-                            <th scope="col">Data Lançamento</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($lancamento as $item)
-                          <tr>
-                            <th scope="row">{{$item->id}}</th>
-                            <td>{{$item->referencia}}</td>
-                            <td>{{$item->nome}}</td>
-                            <td>{{$item->quantidade}}</td>
-                            <td>{{'R$ '.number_format(($item->valor / 100), 2, ',', '.')}}</td>
-                            <td>{{\Carbon\Carbon::parse(\Carbon\carbon::now())->format('d/m/Y')}}</td>
-                          </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
-                </div>
             </div>
         </div>
     </body>
