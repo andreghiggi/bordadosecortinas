@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Send;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
@@ -14,9 +15,9 @@ class SendController extends Controller
 {
     public function list():View
     {
-        $lancamento = Send::all();
+        
         return view('send.list',[
-            'lancamento'  =>  $lancamento
+            'lancamento'  =>  Send::with('produto')->paginate(10)
         ]);
     }
 
@@ -35,7 +36,7 @@ class SendController extends Controller
         $data = $request->all();
         // dd($data);
         $produto = Product::where('referencia', $data['referencia'])->first();
-        // dd($data['quantidade']);
+        // dd($produto->id);
         if($produto == null || $data == null){
             return redirect('send/listar');
         }else {
@@ -52,7 +53,8 @@ class SendController extends Controller
             //     'nome'  => $data['produto'],
             //     'quantidade' => $data['quantidade']    
             // ]);
-            $lancamento = Send::updateOrCreate(['referencia' => $data['referencia']], [ 
+            $lancamento = Send::updateOrCreate(['referencia' => $data['referencia']], [
+                'produto_id' => $produto->id, 
                 'nome'  => $data['produto'],
                 'quantidade' => DB::raw('quantidade + ' . $data['quantidade'])
             ]);
@@ -65,12 +67,12 @@ class SendController extends Controller
     {
         return view('send.edit');
     }
-
-    // public function 
-    // public function delete()
-    // {
-    //     return view('product.list');
-    // }
+ 
+    public function delete(int $id):RedirectResponse
+    {
+        Send::where('id',$id)->delete();
+        return redirect('send/listar');
+    }
 
     public function AutoCompleteHandle($id):JsonResponse
     {
@@ -80,4 +82,16 @@ class SendController extends Controller
         }
         return response()->json([$data],200);
     }
+
+    public function renderizarPdf()
+    {
+		$venda = Send::all();
+		$public = getenv('SERVIDOR_WEB') ? 'public/' : '';
+		$logo = $public . 'imgs/kaycon.jpg';
+		
+		
+		$pdf = \PDF::loadView('send/pdf',compact('venda'));
+		
+		return $pdf->setPaper('a4')->stream('lista_lançamento.pdf');
+	}
 }

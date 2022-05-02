@@ -15,11 +15,11 @@ class CreateLancamento extends Migration
     {
         Schema::create('lancamento', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('referencia')->constrained('produto');
+            $table->unsignedBigInteger('produto_id');
+            $table->string('referencia');
             $table->string('nome');
-            $table->string('quantidade');
-            $table->integer('valor');
-            $table->timestamp('data_lancamento');
+            $table->integer('quantidade');
+            $table->foreign('produto_id')->references('id')->on('produto');
             $table->timestamps();
         });
     }

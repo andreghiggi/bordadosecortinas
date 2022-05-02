@@ -33,6 +33,7 @@ Route::controller(SendController::class)->group(function () {
     // Route::get('send/cadastro', 'create')->name('send.create');
     // Route::post('send/cadastro', 'store')->name('sendCreate.action');
     Route::get('send/detalhe/{id}', 'update');
-    Route::post('send/delete', 'store');
+    Route::get('send/delete/{id}', 'delete')->name('delete');
     Route::get('send/request/{id}', 'AutoCompleteHandle');
+    Route::get('send/pdf', 'renderizarPdf')->name('pdf');
 });

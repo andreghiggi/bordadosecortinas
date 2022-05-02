@@ -75,6 +75,7 @@
                             <th scope="col">Referencia</th>
                             <th scope="col">Nome</th>
                             <th scope="col">Valor</th>
+                            <th scope="col">Data de criação</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -84,6 +85,7 @@
                             <td>{{$item->referencia}}</td>
                             <td>{{$item->nome}}</td>
                             <td>{{'R$ '.number_format(($item->valor / 100), 2, ',', '.')}}</td>
+                            <td>{{ $item->created_at->format('d-m-Y')}}</td>
                           </tr>
                           @endforeach
                         </tbody>
