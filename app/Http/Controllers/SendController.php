@@ -81,8 +81,14 @@ class SendController extends Controller
 		return $pdf->setPaper('a4')->download('lista_lançamento.pdf');
 	}
 
-    // public function filter():
-    // {
-
-    // }
+    public function filter(Request $request):Response
+    {
+        $tomorrow = date( "Y-m-d", strtotime( "+1 days" ) );
+        $date = $request->input('data');
+        $venda = Send::whereBetween('created_at', [$date, $tomorrow])->get();
+		$pdf = \PDF::loadView('send/pdf',compact('venda'));
+		
+		return $pdf->setPaper('a4')->download('lista_lançamento.pdf');
+        
+    }
 }

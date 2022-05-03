@@ -85,26 +85,19 @@
         </div>
         <br>
         <div class="container">
-            <div class="container">
-                {{-- <form  action="send/filtro">
-                    <div class="row d-flex">
-                        <div class="form-group col-lg-2 ">
-                            <div class="container">
-                                <label class="form-label">Apartir De:</label>
-                                <div class="input-group date">
-                                    <input type="date" name="data_inicial" class="form-control" value="{{{ isset($data_inicial) ? $data_inicial : '' }}}" id="kt_datepicker_3" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <i class="la la-calendar"></i>
-                                        </span>
-                                    </div>
-                                </div>
+            <form method="get" action="{{route('filter')}}">
+                <div class="row d-flex">
+                    <div class="form-group col-lg-2 ">
+                        <div class="container">
+                            <label class="form-label">Apartir De:</label>
+                            <div class="input-group date">
+                                <input type="date" name="data" class="form-control" id="kt_datepicker_3"/>
                             </div>
                         </div>
-                        <button style="margin-top: 25px;" class="btn btn-light-primary">Pesquisa</button>
                     </div>
-                </form> --}}
-            </div>
+                    <button style="margin-top: 25px;" type="submit" class="btn btn-primary">imprimir</button>
+                </div>
+            </form>
             <table class="table">
                 <thead>
                     <tr>
@@ -116,7 +109,7 @@
                         <th scope="col">Data Lançamento</th>
                         <th scope="col">Ações</th>
                         <th scope="col">
-                            <a type="button" class="btn btn-warning" href="{{ route('pdf') }}">Imprimir</a>
+                            <a type="button" class="btn btn-warning" href="{{ route('pdf') }}">Imprimir todos</a>
                         </th>
                     </tr>
                 </thead>
