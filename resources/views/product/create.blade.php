@@ -76,6 +76,7 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Valor</th>
                             <th scope="col">Data de criação</th>
+                            <th scope="col">Ações</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -86,6 +87,10 @@
                             <td>{{$item->nome}}</td>
                             <td>{{'R$ '.number_format(($item->valor / 100), 2, ',', '.')}}</td>
                             <td>{{ $item->created_at->format('d-m-Y')}}</td>
+                            <td><div>
+                                <a type="button" class="btn btn-danger"
+                                    href="{{ route('product.delete', ['id' => $item->id]) }}">Deletar</a>
+                            </div></td>
                           </tr>
                           @endforeach
                         </tbody>

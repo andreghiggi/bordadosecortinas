@@ -1,152 +1,191 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Lançamento</title>
+<head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-        <style>
-            body {
-                font-family: 'Nunito', sans-serif;
-            }
-            .form {
-                width: 500px;
-                height: 500px;
-            }
-            .form .col {
-                margin: 10px;
-            }
-            .form .field{
-                padding: 5px;
-                width: 300px;
-            }
-            .buttonBack{
-                text-decoration: none;
-                padding: 9px;
-                background-color:aquamarine;
-                color: #000; 
-            }
-            .buttonCreate{
-                text-decoration: none;
-                padding: 10px;
-                background-color:darkcyan;
-                color: #000; 
-            }
-        </style>
-    </head>
-    <body>
+    <title>Lançamento</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .form {
+            width: 500px;
+            height: 500px;
+        }
+
+        .form .col {
+            margin: 10px;
+        }
+
+        .form .field {
+            padding: 5px;
+            width: 300px;
+        }
+
+        .buttonBack {
+            text-decoration: none;
+            padding: 9px;
+            background-color: aquamarine;
+            color: #000;
+        }
+
+        .buttonCreate {
+            text-decoration: none;
+            padding: 10px;
+            background-color: darkcyan;
+            color: #000;
+        }
+
+    </style>
+</head>
+
+<body> 
         <div class="container">
-            <div class="">
+            <form method="POST" action="" autocomplete="off">
+                @csrf
                 <div class="container">
-                    <form method="POST" action="" autocomplete="off">
-                        @csrf
-                        <div class="container">
-                                <h2>Lançar Produção</h2>
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <p id="error" class="alert alert-danger" role="alert" style="display:none">Produto não encontrado!</p>
-                                        <label class="form-label" for="referencia">Referencia:</label><br/>
-                                        <input class="form-control" class="field" type="text" name="referencia" id="referencia"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <label class="form-label" for="produto">Nome do Produto</label><br/>
-                                        <input class="form-control" type="text" name="produto" id="produto"/>
-                                    </div>
-                                </div>    
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <label class="form-label" for="quantidade">Quantidade</label><br/>
-                                        <input class="form-control" type="text" name="quantidade" id="quantidade"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12" style="margin-top: 1rem">
-                                        <input class="btn btn-primary" type="submit" value="Salvar"></input>
-                                        <a type="button" class="btn btn-warning"  href="{{ route('main') }}">Voltar</a>
-                                    </div>
-                                </div>            
-                            </div>
-                        </div>
-                        </form>
-                        <div class="">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Referencia</th>
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Quantidade</th>
-                                    <th scope="col">Valor</th>
-                                    <th scope="col">Data Lançamento</th>
-                                    <th scope="col">Ações</th>
-                                    <th scope="col"><a type="button" class="btn btn-warning"  href="{{ route('pdf') }}">Imprimir</a></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($lancamento as $item)
-                                    <tr>
-                                    <th scope="row">{{$item->id}}</th>
-                                    <td>{{$item->referencia}}</td>
-                                    <td>{{$item->nome}}</td>
-                                    <td>{{$item->quantidade}}</td>
-                                    @if ($item->produto[0]->valor == null)
-                                    <td>R$: 0.00</td> 
-                                    @else
-                                    <td>{{'R$ '.number_format((($item->produto[0]->valor * $item->quantidade) / 100), 2, ',', '.')}}</td>    
-                                    @endif
-                                    <td>{{$item->created_at->format('d-m-Y')}}</td>
-                                    <td>
-                                        <div>
-                                            <a type="button" class="btn btn-danger"  href="{{ route('delete', ['id' => $item->id]) }}">Deletar</a>
-                                        </div>
-                                    </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            {{ $lancamento->links() }}
+                    <h2>Lançar Produção</h2>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <p id="error" class="alert alert-danger" role="alert" style="display:none">Produto não
+                                encontrado!</p>
+                            <label class="form-label" for="referencia">Referencia:</label><br />
+                            <input class="form-control" class="field" type="text" name="referencia"
+                                id="referencia" />
                         </div>
                     </div>
-            </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label class="form-label" for="produto">Nome do Produto</label><br />
+                            <input class="form-control" type="text" name="produto" id="produto" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label class="form-label" for="quantidade">Quantidade</label><br />
+                            <input class="form-control" type="text" name="quantidade" id="quantidade" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" style="margin-top: 1rem">
+                            <input class="btn btn-primary" type="submit" value="Salvar"></input>
+                            <a type="button" class="btn btn-warning" href="{{ route('main') }}">Voltar</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <br>
         </div>
-    </body>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script>
-        jQuery(document).ready(function() {
-            @yield('postJquery');
-        });
-    </script>
-    <script>
-        var PRODUTO = ['referencia', 'nome', 'valor']
-        
-        $('#referencia').change(function(){
-            let referencia = $('#referencia').val()
-            $.ajax({
-                method: 'get',
-                url: 'request/' + $(this).val(),
-                dataType: "json",
-                success: function(data){
-                    console.log(data);
-                    $('#produto').val(data[0][0].nome);
-                }, error: function(e){
-                    $('#error').css("display", "block");
-                    console.log(e)
-                },
-                statusCode: {
-                    500: function(){
-                        console.log('something went wrong')
-                    }
+        <br>
+        <div class="container">
+            <div class="container">
+                {{-- <form  action="send/filtro">
+                    <div class="row d-flex">
+                        <div class="form-group col-lg-2 ">
+                            <div class="container">
+                                <label class="form-label">Apartir De:</label>
+                                <div class="input-group date">
+                                    <input type="date" name="data_inicial" class="form-control" value="{{{ isset($data_inicial) ? $data_inicial : '' }}}" id="kt_datepicker_3" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button style="margin-top: 25px;" class="btn btn-light-primary">Pesquisa</button>
+                    </div>
+                </form> --}}
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Referencia</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Data Lançamento</th>
+                        <th scope="col">Ações</th>
+                        <th scope="col">
+                            <a type="button" class="btn btn-warning" href="{{ route('pdf') }}">Imprimir</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($lancamento as $item)
+                        <tr>
+                            <th scope="row">{{ $item->id }}</th>
+                            <td>{{ $item->referencia }}</td>
+                            <td>{{ $item->nome }}</td>
+                            <td>{{ $item->quantidade }}</td>
+                            @if ($item->produto[0]->valor == null)
+                                <td>R$: 0.00</td>
+                            @else
+                                <td>{{ 'R$ ' . number_format(($item->produto[0]->valor * $item->quantidade) / 100, 2, ',', '.') }}
+                                </td>
+                            @endif
+                            <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                            <td>
+                                <div>
+                                    <a type="button" class="btn btn-danger"
+                                        href="{{ route('delete', ['id' => $item->id]) }}">Deletar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center">
+            {{ $lancamento->links() }}
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+    jQuery(document).ready(function() {
+        @yield('postJquery');
+    });
+</script>
+<script>
+    var PRODUTO = ['referencia', 'nome', 'valor']
+
+    $('#referencia').change(function() {
+        let referencia = $('#referencia').val()
+        $.ajax({
+            method: 'get',
+            url: 'request/' + $(this).val(),
+            dataType: "json",
+            success: function(data) {
+                console.log(data);
+                if(data[0].length == 0){
+                    alert('Produto não encontrado!');
                 }
-            })
-            console.log(referencia)
+                $('#produto').val(data[0][0].nome);
+            },
+            error: function(e) {
+                console.log(e)
+                
+            },
+            statusCode: {
+                500: function() {
+                    console.log('something went wrong')
+                }
+            }
         })
-    </script>
+        console.log(referencia)
+    })
+</script>
+
 </html>

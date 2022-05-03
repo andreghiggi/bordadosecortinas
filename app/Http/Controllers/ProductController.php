@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Send;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -36,8 +37,10 @@ class ProductController extends Controller
         return view('product.edit');
     }
 
-    // public function delete()
-    // {
-    //     return view('product.list');
-    // }
+    public function delete(int $id):RedirectResponse
+    {
+        Send::with('produto')->where('produto_id', $id)->delete();
+        Product::where('id',$id)->delete();
+        return redirect('produto/cadastro');
+    }
 }

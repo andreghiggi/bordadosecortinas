@@ -24,7 +24,8 @@ Route::controller(ProductController::class)->group(function () {
     Route::post('produto/cadastro', 'store');
     Route::get('produto/detalhe/{id}', 'show');
     Route::get('produto/detalhe/{id}', 'update');
-    Route::post('produto/delete', 'store');
+    Route::get('produto/delete/{id}', 'delete')->name('product.delete');
+    
 });
 
 Route::controller(SendController::class)->group(function () {
