@@ -13,57 +13,46 @@
             body {
                 font-family: 'Nunito', sans-serif;
             }
-            .form {
-                width: 500px;
-                height: 500px;
-            }
-            .form .col {
-                margin: 10px;
-            }
-            .form .field{
-                padding: 5px;
-                width: 300px;
-            }
-            .buttonBack{
-                text-decoration: none;
-                padding: 9px;
-                background-color:aquamarine;
-                color: #000; 
-            }
-            .buttonCreate{
-                text-decoration: none;
-                padding: 10px;
-                background-color:darkcyan;
-                color: #000; 
+            input[type=number]::-webkit-inner-spin-button { 
+                -webkit-appearance: none;
+    
+                }
+            input[type=number] { 
+            -moz-appearance: textfield;
+            appearance: textfield;
             }
         </style>
     </head>
     <body class="antialiased">
         <div class="container">
-            <div class="main-container">
-                <div class="container">
-                    <h2>Editar Produto</h2>
-                    <div class="table">
-                        <form class="table" method="POST" action="" autocomplete="off">
-                            @csrf
-                            <div class="form">
-                                <div class="col">
-                                    <label class="form-label" for="nome">Referencia:</label><br/>
-                                    <input class="form-control" class="field" type="text" name="referencia" id="referencia"/>
-                                </div>
-                                <div class="col">
-                                    <label class="form-label" for="contacts">Nome do Produto</label><br/>
-                                    <input class="form-control" type="number" name="produto" id="produto"/>
-                                </div>
-                                <div class="col">
-                                    <input class="btn btn-primary" type="submit" value="Salvar"></input>
-                                    <a type="button" class="btn btn-warning" href="#">Voltar</a>
-                                </div>
-                            </div>
-                        </form>
+            <h2>Editar Produto</h2>
+            <form class="form" method="POST" autocomplete="off">
+                @csrf
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="form-label" for="referencia">Referencia:</label><br/>
+                        <input class="form-control" value="{{$product->referencia}}" class="field" type="text" name="referencia" id="referencia"/>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label class="form-label" for="produto">Nome do Produto</label><br/>
+                        <input class="form-control" value="{{$product->nome}}" type="text" name="produto" id="produto"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="form-label" for="valor">Valor do Produto</label><br/>
+                        <input class="form-control" value="{{str_replace(',','.',number_format(($product->valor / 100), 2))}}" type="text" name="valor" id="valor"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-sm-2">
+                        <input class="btn btn-primary" type="submit" value="Salvar"></input>
+                        <a type="button" class="btn btn-warning" href="{{ route('produto.create') }}">Voltar</a>
+                    </div>
+                </div>
+            </form>
         </div>
     </body>
 </html>

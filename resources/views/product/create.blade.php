@@ -13,29 +13,16 @@
             body {
                 font-family: 'Nunito', sans-serif;
             }
-            .form {
-                width: 500px;
-                height: 500px;
+            input[type=number]::-webkit-inner-spin-button { 
+                -webkit-appearance: none;
+    
+                }
+            input[type=number] { 
+            -moz-appearance: textfield;
+            appearance: textfield;
             }
-            .form .col {
-                margin: 10px;
-            }
-            .form .field{
-                padding: 5px;
-                width: 300px;
-            }
-            .buttonBack{
-                text-decoration: none;
-                padding: 9px;
-                background-color:aquamarine;
-                color: #000; 
-            }
-            .buttonCreate{
-                text-decoration: none;
-                padding: 10px;
-                background-color:darkcyan;
-                color: #000; 
-            }
+
+}
         </style>
     </head>
     <body class="antialiased">
@@ -49,20 +36,20 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-sm-2">
-                                        <label class="form-label" for="nome">Referencia:</label><br/>
+                                        <label class="form-label" for="referencia">Referencia:</label><br/>
                                         <input class="form-control" class="field" type="text" name="referencia" id="referencia"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <label class="form-label" for="contacts">Nome do Produto</label><br/>
+                                        <label class="form-label" for="produto">Nome do Produto</label><br/>
                                         <input class="form-control" type="text" name="produto" id="produto"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-2">
-                                        <label class="form-label" for="contacts">Valor</label><br/>
-                                        <input class="form-control" type="text" name="valor" id="valor"/>
+                                        <label class="form-label" for="valor">Valor</label><br/>
+                                        <input class="form-control" placeholder="0.00" type="text" name="valor" id="valor"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -92,12 +79,14 @@
                                     <th scope="row">{{$item->id}}</th>
                                     <td>{{$item->referencia}}</td>
                                     <td>{{$item->nome}}</td>
-                                    <td>{{'R$ '.number_format(($item->valor / 100), 2, ',', '.')}}</td>
+                                    <td>{{'R$ '.str_replace(',','.',number_format(($item->valor / 100), 2))}}</td>
                                     <td>{{ $item->created_at->format('d-m-Y')}}</td>
-                                    <td><div>
-                                        <a type="button" class="btn btn-danger"
-                                            href="{{ route('product.delete', ['id' => $item->id]) }}">Deletar</a>
-                                    </div></td>
+                                    <td>
+                                        <div>
+                                            <a type="button" class="btn btn-warning" href="{{ route('product.edit', ['id' => $item->id]) }}">Editar</a>
+                                            <a type="button" class="btn btn-danger" href="{{ route('product.delete', ['id' => $item->id]) }}">Deletar</a>
+                                        </div>
+                                    </td>
                                   </tr>
                                   @endforeach
                                 </tbody>

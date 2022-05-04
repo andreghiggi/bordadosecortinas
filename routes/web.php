@@ -22,8 +22,8 @@ Route::get('/', function () {
 Route::controller(ProductController::class)->group(function () {
     Route::get('produto/cadastro', 'create')->name('produto.create');
     Route::post('produto/cadastro', 'store');
-    Route::get('produto/detalhe/{id}', 'show');
-    Route::get('produto/detalhe/{id}', 'update');
+    Route::get('produto/detalhe/{id}', 'edit')->name('product.edit');
+    Route::post('produto/detalhe/{id}', 'update');
     Route::get('produto/delete/{id}', 'delete')->name('product.delete');
     
 });

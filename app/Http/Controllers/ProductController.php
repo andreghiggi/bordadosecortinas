@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Send;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class ProductController extends Controller
@@ -21,20 +22,46 @@ class ProductController extends Controller
 
     public function store(Request $request):RedirectResponse
     {
-        $data = $request->all();
+        $validated = $request->validate([
+            'referencia' => 'required|unique:produto,referencia',
+            'produto' =>    'required|string|unique:produto,nome',
+            'valor' =>      'numeric'
+        ]);
+
+        // $data = $request->all();
+        $value = str_replace(',','.',$validated['valor']);
+        $newValue = ($value * 100);
+        // dd($data['valor']);
+        // $valor = str_replace(',','.',$data['valor']);
         Product::create([
-            'referencia' => $data['referencia'],
-            'nome' => $data['produto'],
-            'valor' => ($data['valor']* 100)
+            'referencia' => $validated['referencia'],
+            'nome' => $validated['produto'],
+            'valor' => $newValue
         ]);
 
         return redirect('produto/cadastro')->with('sucesso', 'Produto cadastrado com sucesso!');
 
     }
 
-    public function edit():View
+    public function edit(int $id):View
     {
-        return view('product.edit');
+        return view('product.edit',[
+            'product' => Product::find($id)
+        ]);
+    }
+
+    public function update(int $id, Request $request):RedirectResponse
+    {
+        $product = $request->all();
+        $value = str_replace(',','.',$product['valor']);
+        $newValue = ($value * 100);
+        Product::where('id', $id)->update([
+            'referencia' => $product['referencia'],
+            'nome' => $product['produto'],
+            'valor' => $newValue
+        ]);
+        
+        return redirect('produto/cadastro');
     }
 
     public function delete(int $id):RedirectResponse

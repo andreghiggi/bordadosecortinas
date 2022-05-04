@@ -14,35 +14,6 @@
         body {
             font-family: 'Nunito', sans-serif;
         }
-
-        .form {
-            width: 500px;
-            height: 500px;
-        }
-
-        .form .col {
-            margin: 10px;
-        }
-
-        .form .field {
-            padding: 5px;
-            width: 300px;
-        }
-
-        .buttonBack {
-            text-decoration: none;
-            padding: 9px;
-            background-color: aquamarine;
-            color: #000;
-        }
-
-        .buttonCreate {
-            text-decoration: none;
-            padding: 10px;
-            background-color: darkcyan;
-            color: #000;
-        }
-
     </style>
 </head>
 
