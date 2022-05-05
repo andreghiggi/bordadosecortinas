@@ -60,6 +60,9 @@ class SendController extends Controller
 
     public function update(int $id, Request $request):RedirectResponse
     {
+        $request->validate([
+            'quantidade' => 'required|numeric'
+        ]);
         Send::where('id', $id)
         ->update([
             'quantidade' => $request->input('quantidade')

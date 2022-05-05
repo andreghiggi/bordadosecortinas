@@ -86,9 +86,6 @@
                         <th scope="col">Valor</th>
                         <th scope="col">Data Lançamento</th>
                         <th scope="col">Ações</th>
-                        <th scope="col">
-                            <a type="button" class="btn btn-warning" href="{{ route('pdf') }}">Imprimir todos</a>
-                        </th>
                     </tr>
                 </thead>
                 <tbody>

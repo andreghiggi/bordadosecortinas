@@ -29,7 +29,19 @@
             <form class="form" method="POST" autocomplete="off">
                 @csrf
                 <div class="row">
+                    <div class="col-4">
+                        @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                    </div>
                     <div class="col-sm-2">
+                        
                         <label class="form-label" for="quantidade">Quantidade</label><br/>
                         <input class="form-control" value="{{$send->quantidade}}" type="number" name="quantidade" id="quantidade"/>
                     </div>
