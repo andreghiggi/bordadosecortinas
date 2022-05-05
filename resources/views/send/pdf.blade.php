@@ -39,10 +39,10 @@
     <table>
         <thead class="b-bottom">
             <tr>
-                <td style="width: 150px;">
+                <td style="width: 100px;">
                     <strong>Referencia</strong>
                 </td>
-                <td style="width: 155px;">
+                <td style="width: 210px;">
                     <strong>Nome do Produto</strong>
                 </td>
                 <td style="width: 150px;">
@@ -56,13 +56,14 @@
                 </td>
             </tr>
         </thead>
-        <tbody>
+        <tbody >
             <?php
                 $total = 0;
                 $resultado = 0;
                 $valor = 0;
                 $total = 0;
                 $valorTotal = 0;
+                $quantidade = 0;
             ?>
             @foreach ($venda as $item)
             <?php
@@ -72,8 +73,9 @@
                $newTotal = number_format($total,2);
                $resultado = ($item->produto[0]->valor * $item->quantidade)/100;
                $valorTotal = $valorTotal + $resultado;
+               $quantidade = ($quantidade + $item->quantidade);
             ?>
-            <tr>
+            <tr class="b-bottom">
                 <th>{{$item->referencia}}</th>
                 <th>{{$item->nome}}</th>
                 <th>{{'R$ '.str_replace(',', '.', $newValor)}}</th>
@@ -91,21 +93,23 @@
     </table><br>
 
     <table>
-        <thead class="b-bottom" style="width: 620px;">
-            <tr style="height: 10px;">
-                <td style="width: 590px;">
-                    <strong>Total</strong>
+        <thead class="b-top">
+            <tr class="b-bottom" style="width: 200px;">
+                <td style="width: 460px;">
+                    Quantidade Total</td>
+                <td>{{$quantidade}}</td>
+            </tr>
+            <tr style="b-bottom">
+                <td style="width: 585px">
+                    Total
                 </td>
                 <td>
-                    <p> </p>
+                    <p>{{'R$ '.number_format(str_replace(',', '.',$valorTotal),2)}}</p>
                 </td>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td></td>
-                <td>{{'R$ '.number_format(str_replace(',', '.',$valorTotal),2)}}</td>
-            </tr>
+        <tbody class="b-bottom">
+            
         </tbody>
     </table>
 </body>

@@ -32,7 +32,7 @@ class SendController extends Controller
     {
         $request->validate([
             'referencia' => 'required',
-            'nome'  => 'required|string',
+            'produto'  => 'required|string',
             'quantidade' => 'required|numeric'
         ]);
         $data = $request->all();
