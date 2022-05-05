@@ -14,7 +14,7 @@ class ProductController extends Controller
     
     public function create():View
     {
-        $produto = Product::all();
+        $produto = Product::paginate(10);
         return view('product.create',[
             'produto' => $produto
         ]);

@@ -90,7 +90,8 @@
                                   </tr>
                                   @endforeach
                                 </tbody>
-                              </table>
+                            </table>
+                            {{ $produto->links() }}
                         </div>
                     </div>
                 </div>

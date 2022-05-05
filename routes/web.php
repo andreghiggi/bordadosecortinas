@@ -31,7 +31,8 @@ Route::controller(ProductController::class)->group(function () {
 Route::controller(SendController::class)->group(function () {
     Route::get('send/listar', 'list')->name('send.list');
     Route::post('send/listar', 'store')->name('send.store');
-    Route::get('send/detalhe/{id}', 'update');
+    Route::get('send/detalhe/{id}', 'edit')->name('send.edit');
+    Route::post('send/detalhe/{id}', 'update');
     Route::get('send/delete/{id}', 'delete')->name('delete');
     Route::get('send/request/{id}', 'AutoCompleteHandle');
     Route::get('send/filter', 'filter')->name('filter');

@@ -24,9 +24,16 @@
                 <div class="container">
                     <h2>Lançar Produção</h2>
                     <div class="row">
-                        <div class="col-sm-2">
-                            <p id="error" class="alert alert-danger" role="alert" style="display:none">Produto não
-                                encontrado!</p>
+                        <div class="col-sm-3">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <label class="form-label" for="referencia">Referencia:</label><br />
                             <input class="form-control" class="field" type="text" name="referencia"
                                 id="referencia" />
@@ -100,8 +107,8 @@
                             <td>{{ $item->created_at->format('d-m-Y') }}</td>
                             <td>
                                 <div>
-                                    <a type="button" class="btn btn-danger"
-                                        href="{{ route('delete', ['id' => $item->id]) }}">Deletar</a>
+                                    <a type="button" class="btn btn-warning" href="{{ route('send.edit', ['id' => $item->id]) }}">Editar Quantidade</a>
+                                    <a type="button" class="btn btn-danger" href="{{ route('delete', ['id' => $item->id]) }}">Deletar</a>
                                 </div>
                             </td>
                         </tr>
@@ -135,6 +142,7 @@
                 console.log(data);
                 if(data[0].length == 0){
                     alert('Produto não encontrado!');
+
                 }
                 $('#produto').val(data[0][0].nome);
             },

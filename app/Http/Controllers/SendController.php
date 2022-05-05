@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class SendController extends Controller
 {
@@ -29,11 +30,11 @@ class SendController extends Controller
 
     public function store(Request $request):RedirectResponse
     {
-        // $request->validate([
-        //     'referencia' => 'required',
-        //     'nome'  => 'required|string',
-        //     'data' => 'Date'
-        // ]);
+        $request->validate([
+            'referencia' => 'required',
+            'nome'  => 'required|string',
+            'quantidade' => 'required|numeric'
+        ]);
         $data = $request->all();
         $produto = Product::where('referencia', $data['referencia'])->first();
         if($produto == null || $data == null){
@@ -49,9 +50,21 @@ class SendController extends Controller
         }  
     }
 
-    public function edit():View
+    public function edit(int $id):View
     {
-        return view('send.edit');
+        
+        return view('send.edit',[
+            'send' => Send::find($id)
+        ]);
+    }
+
+    public function update(int $id, Request $request):RedirectResponse
+    {
+        Send::where('id', $id)
+        ->update([
+            'quantidade' => $request->input('quantidade')
+        ]);
+        return redirect('send/listar');
     }
  
     public function delete(int $id):RedirectResponse
